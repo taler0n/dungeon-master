@@ -1,0 +1,39 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="DaGame.WeaponChangeWindow"
+        Title="DungeonMaster" FontFamily="{StaticResource Pixel}" Icon="pack://application:,,,/Resources/Images/tile_t.png" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize" Height="320" Width="640">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" Viewport="0,0,220,190" ViewportUnits="Absolute" Stretch="None" ImageSource="pack://application:,,,/Resources/Images/bg_window.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Look, what you've found!" Foreground="GhostWhite" FontSize="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Width="400" Grid.Row="1">
+            <Label.Content>
+                <TextBlock Name="WeaponInfoText" Foreground="GhostWhite" FontSize="24" TextAlignment="Center" TextWrapping="Wrap" Height="123" Width="390"/>
+            </Label.Content>
+        </Label>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Content="Left Hand" Foreground="GhostWhite" Background="Black" Click="LeftHand_Click" FontSize="24"/>
+            <Button Grid.Column="5" Content="Right Hand" Foreground="GhostWhite" Background="Black" Click="RightHand_Click" FontSize="24"/>
+            <Button Grid.Column="3" Content="Leave" Foreground="GhostWhite" Background="Black" Click="Leave_Click" FontSize="24"/>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,147 @@
+﻿<Window x:Class="DaGame.BattleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DungeonMaster" FontFamily="{StaticResource Pixel}" Icon="pack://application:,,,/Resources/Images/tile_t.png" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Height="640" Width="1280" Closing="BattleWindow_Closing">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" Viewport="0,0,220,190" ViewportUnits="Absolute" Stretch="None" ImageSource="pack://application:,,,/Resources/Images/bg_window.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Canvas Grid.Row="0">
+            <Button x:Name="LeaveButton" Content="Leave" Foreground="GhostWhite" Background="Black" FontSize="30" Height="60" Width="120" Canvas.Left="10" Canvas.Top="10" Click="LeaveButton_Click"/>
+        </Canvas>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Canvas Grid.Column="0">
+                <Label x:Name="lblHP" Content="HP:" Foreground="GhostWhite" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="40" Canvas.Top="20" FontSize="40"/>
+                <Label x:Name="HP0" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="114" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP1" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="154" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP2" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="194" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP3" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="234" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP4" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="274" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP5" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="314" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP6" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="354" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP7" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="394" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP8" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="434" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HP9" ToolTip="This bar shows your current health state. If it reaches zero - you die." Canvas.Left="474" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="lblEP" Content="EP:" Foreground="GhostWhite" ToolTip="You need energy to perform special attacks." Canvas.Left="48" Canvas.Top="83" FontSize="40"/>
+                <Label x:Name="EP0" ToolTip="You need energy to perform special attacks." Canvas.Left="114" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EP1" ToolTip="You need energy to perform special attacks." Canvas.Left="154" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EP2" ToolTip="You need energy to perform special attacks." Canvas.Left="194" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EP3" ToolTip="You need energy to perform special attacks." Canvas.Left="234" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EP4" ToolTip="You need energy to perform special attacks." Canvas.Left="274" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+            </Canvas>
+            <Canvas Grid.Column="1">
+                <Label x:Name="lblHPM" Foreground="GhostWhite" Content="HP:" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="40" Canvas.Top="20" FontSize="40"/>
+                <Label x:Name="HPM0" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="114" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM1" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="154" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM2" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="194" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM3" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="234" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM4" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="274" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM5" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="314" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM6" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="354" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM7" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="394" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM8" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="434" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="HPM9" ToolTip="This is your opponent's health. You win the fight, when it reaches zero." Canvas.Left="474" Canvas.Top="33" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/health.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="lblEPM" Content="EP:" Foreground="GhostWhite" ToolTip="Your enemy gains energy as you fight them. Once they have enough, something bad can occur." Canvas.Left="48" Canvas.Top="83" FontSize="40"/>
+                <Label x:Name="EPM0" ToolTip="Your enemy gains energy as you fight them. Once they have enough, something bad can occur." Canvas.Left="114" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EPM1" ToolTip="Your enemy gains energy as you fight them. Once they have enough, something bad can occur." Canvas.Left="154" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+                <Label x:Name="EPM2" ToolTip="Your enemy gains energy as you fight them. Once they have enough, something bad can occur." Canvas.Left="194" Canvas.Top="98" Height="40" Width="40">
+                    <Image Source="pack://application:,,,/Resources/Images/energy.png" Stretch="UniformToFill"/>
+                </Label>
+            </Canvas>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" x:Name="heroPicture" Foreground="GhostWhite" Background="Black" FontSize="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Column="3" Content="VS" Foreground="GhostWhite" FontSize="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Grid.Column="5" x:Name="enemyPicture" Foreground="GhostWhite" Background="Black" FontSize="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Canvas Grid.Column="0">
+                <Button x:Name="Atk1Button" Content="Atk1" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="32" Canvas.Top="30" Click="Atk1Button_Click"/>
+                <Button x:Name="Atk2Button" Content="Atk2" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="184" Canvas.Top="30" Click="Atk2Button_Click"/>
+                <Button x:Name="SpecAtkButton" Content="Special" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="184" Canvas.Top="30" Click="SpecAtkButton_Click"/>
+                <Button x:Name="PassButton" Content="Pass" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="32" Canvas.Top="30" Click="PassButton_Click"/>
+            </Canvas>
+            <Canvas Grid.Column="1">
+                <Button x:Name="AtkMButton" Content="Atk" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="180" Canvas.Top="30"/>
+                <Button x:Name="SpecAtkMButton" Content="Special" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="180" Canvas.Top="30"/>
+            </Canvas>
+        </Grid>
+    </Grid>
+</Window>

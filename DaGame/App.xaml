@@ -1,0 +1,8 @@
+﻿<Application x:Class="DaGame.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainMenuWindow.xaml">
+    <Application.Resources>
+        <FontFamily x:Key="Pixel">pack://application:,,,/Resources/#DisposableDroid BB</FontFamily>
+    </Application.Resources>
+</Application>

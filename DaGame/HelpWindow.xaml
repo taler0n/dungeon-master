@@ -1,0 +1,15 @@
+﻿<Window x:Class="DaGame.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DungeonMaster" FontFamily="{StaticResource Pixel}" Icon="pack://application:,,,/Resources/Images/tile_t.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow" Height="300" Width="300">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="Tile" Viewport="0,0,220,190" ViewportUnits="Absolute" Stretch="None" ImageSource="pack://application:,,,/Resources/Images/bg_window.png"/>
+        </Grid.Background>
+        <Label  HorizontalAlignment="Center" Margin="11,25,11,0" VerticalAlignment="Top" Height="237" Width="272">
+            <Label.Content>
+                <TextBlock FontSize="24" Foreground="GhostWhite" TextAlignment="Center" TextWrapping="Wrap" Height="227" Width="262">The goal of this game is to find the treasure, hidden somewhere in the dungeon, and to get back to the entrance with it. But beware: monsters and obstacles await you there. Good luck!</TextBlock>
+            </Label.Content>
+        </Label>
+    </Grid>
+</Window>
