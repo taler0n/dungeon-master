@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace DaGame
 {
-    
+    //Информация об оружии
     public class Weapon
     {
         public double Damage { get; set; }
@@ -25,10 +25,12 @@ namespace DaGame
     
     public static class DataBase
     {
+        //Общий генератор чисел
         public static Random RNG;
+        //Коллекции монстров и оружий
         public static List<Type> MonsterTypes;
         public static Dictionary<char, Weapon> Weapons;
-
+        //Коллекции картинок, чтобы не хранить картинку у каждого монстра или клетки
         public static Image HeroImage;
         public static Dictionary<char, ImageBrush> TileImages;
         public static Dictionary<char, BitmapImage> WeaponImages;
@@ -57,7 +59,7 @@ namespace DaGame
             //r - rope
             //b - buckler
             //t - torch
-            //g - gold -- t for treasure is already there :/
+            //g - gold -- t уже занято :/
             Weapons = new Dictionary<char, Weapon>();
             Weapons.Add('e', new Weapon(1, "Just your bare hand.", "A punch.\nDeals no additional damage."));
             Weapons.Add('s', new Weapon(2, "A sword. It's still sharp, so the strike would be quite deadly.", "A powerful swing with your sword. Deals double damage."));
@@ -67,7 +69,7 @@ namespace DaGame
             Weapons.Add('t', new Weapon(1.25, "A burning torch. Now you can at least properly see in this dark. And also bring some fire to your fights.", "A swing with your torch. Deals moderate damage and ignites the target."));
             Weapons.Add('g', new Weapon(1.15, "The treasure! You need to get to the exit as fast as you can. There is no reason to be in this caves now.", "A heavier blow. Deals slightly more damage."));
 
-            char[] wpnCodes = new char[] { 's', 'r', 'b', 't', 'g', 'e', 'p' };
+            char[] wpnCodes = new char[] { 's', 'r', 'b', 't', 'e', 'g', 'p' };
             foreach (char code in wpnCodes)
             {
                 string path = @"pack://application:,,,/Resources/Images/item_" + code + @".png";
@@ -76,15 +78,19 @@ namespace DaGame
             }
 
             MonsterTypes = new List<Type>();
+            //1 тир противников - с начала игры
             MonsterTypes.Add(typeof(Ghost));
             MonsterTypes.Add(typeof(Statue));
             MonsterTypes.Add(typeof(Goblin));
+            //2 тир - после открытия первого сундука или спуска в дыру
             MonsterTypes.Add(typeof(Rat));
             MonsterTypes.Add(typeof(Spider));
             MonsterTypes.Add(typeof(Ooze));
+            //3 тир - после нахождения сокровища
             MonsterTypes.Add(typeof(Zombie));
             MonsterTypes.Add(typeof(Skeleton));
             MonsterTypes.Add(typeof(Shadow));
+            //Особые враги - не появляются на карте, бой происходит при определенных условиях, всегда имеют инициативу
             MonsterTypes.Add(typeof(Bat));
             MonsterTypes.Add(typeof(Mimic));
             MonsterTypes.Add(typeof(Tentacle));

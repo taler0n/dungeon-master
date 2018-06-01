@@ -33,10 +33,41 @@ namespace DaGame
         {
             InitializeComponent();
             heroPicture.Content = DataBase.HeroImage;
-            var image = new Image();
-            image.Source = DataBase.MonsterImages[enemy.GetType().Name];
-            image.Stretch = Stretch.UniformToFill;
-            enemyPicture.Content = image;
+            var imageM = new Image();
+            imageM.Source = DataBase.MonsterImages[enemy.GetType().Name];
+            imageM.Stretch = Stretch.UniformToFill;
+            enemyPicture.Content = imageM;
+
+            var imageA1 = new Image();
+            imageA1.Source = DataBase.WeaponImages[sam.LeftHand];
+            imageA1.Stretch = Stretch.UniformToFill;
+            Atk1Button.Content = imageA1;
+
+            var imageA2 = new Image();
+            imageA2.Source = DataBase.WeaponImages[sam.RightHand];
+            imageA2.Stretch = Stretch.UniformToFill;
+            Atk2Button.Content = imageA2;
+
+            var imageS = new Image();
+            imageS.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Images/energy.png", UriKind.Absolute));
+            imageS.Stretch = Stretch.UniformToFill;
+            SpecAtkButton.Content = imageS;
+
+            var imageP = new Image();
+            imageP.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Images/pass.png", UriKind.Absolute));
+            imageP.Stretch = Stretch.UniformToFill;
+            PassButton.Content = imageP;
+
+            var imageAM = new Image();
+            imageAM.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Images/item_s.png", UriKind.Absolute));
+            imageAM.Stretch = Stretch.UniformToFill;
+            AtkMButton.Content = imageAM;
+
+            var imageSM = new Image();
+            imageSM.Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Images/energy.png", UriKind.Absolute));
+            imageSM.Stretch = Stretch.UniformToFill;
+            SpecAtkMButton.Content = imageSM;
+
             Atk1Button.ToolTip = DataBase.Weapons[sam.LeftHand].BattleText;
             Atk2Button.ToolTip = DataBase.Weapons[sam.RightHand].BattleText;
             PassButton.ToolTip = "Do nothing.";
@@ -217,7 +248,6 @@ namespace DaGame
                 Fleed = true;
                 Close();
             }
-            else MessageBox.Show("You don't have the initiative.");
         }
         void RedrawBars()
         {

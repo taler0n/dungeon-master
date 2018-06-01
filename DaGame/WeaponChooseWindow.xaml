@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DaGame.WeaponChooseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DungeonMaster" Foreground="GhostWhite" Icon="pack://application:,,,/Resources/Images/tile_t.png" FontFamily="{StaticResource Pixel}" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize" Height="320" Width="640">
+        Title="DungeonMaster" Foreground="GhostWhite" Icon="pack://application:,,,/Resources/Images/tile_t.png" FontFamily="{StaticResource Pixel}" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize" Height="320" Width="640">
     <Grid>
         <Grid.Background>
             <ImageBrush TileMode="Tile" Viewport="0,0,220,190" ViewportUnits="Absolute" Stretch="None" ImageSource="pack://application:,,,/Resources/Images/bg_window.png"/>

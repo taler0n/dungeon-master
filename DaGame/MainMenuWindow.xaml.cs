@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Media;
 
 namespace DaGame
 {
@@ -20,9 +21,14 @@ namespace DaGame
     /// </summary>
     public partial class MainMenuWindow : Window
     {
+        //Сразу начинаем играть музыку
+        SoundPlayer music;
         public MainMenuWindow()
         {
             InitializeComponent();
+            music = new SoundPlayer();
+            music.Stream = Properties.Resources.Music;
+            music.PlayLooping();
         }
 
         private void NewGameButton_Click(object sender, RoutedEventArgs e)

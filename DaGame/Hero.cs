@@ -22,6 +22,7 @@ namespace DaGame
                     _hp = 10;
                 else if (value <= 0)
                 {
+                    //Вызов события "смерть"
                     _hp = 0;
                     Application.Current.MainWindow.RaiseEvent(new RoutedEventArgs(MainWindow.NoHealthEvent));
                 }
@@ -37,6 +38,7 @@ namespace DaGame
                     _ep = 5;
                 else if (value <= 0)
                 {
+                    //Вызов события "усталость"
                     _ep = 0;
                     Application.Current.MainWindow.RaiseEvent(new RoutedEventArgs(MainWindow.NoEnergyEvent));
                 }

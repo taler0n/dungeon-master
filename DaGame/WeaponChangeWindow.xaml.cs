@@ -47,7 +47,6 @@ namespace DaGame
                 ChestExplored = true;
                 Close();
             }
-            else MessageBox.Show("One look at the treasure - and it hypnotizes you. Your hand can not drop it anymore.");
         }
 
         private void RightHand_Click(object sender, RoutedEventArgs e)
@@ -62,7 +61,6 @@ namespace DaGame
                 ChestExplored = true;
                 Close();
             }
-            else MessageBox.Show("One look at the treasure - and it hypnotizes you. Your hand can not drop it anymore.");
         }
         private void Leave_Click(object sender, RoutedEventArgs e)
         {

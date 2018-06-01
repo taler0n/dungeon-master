@@ -75,11 +75,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DrownWindow.xaml.cs">
+      <DependentUpon>DrownWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EatWindow.xaml.cs">
+      <DependentUpon>EatWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FoodWindow.xaml.cs">
+      <DependentUpon>FoodWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainMenuWindow.xaml.cs">
       <DependentUpon>MainMenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SleepWindow.xaml.cs">
+      <DependentUpon>SleepWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WeaponChooseWindow.xaml.cs">
       <DependentUpon>WeaponChooseWindow.xaml</DependentUpon>
@@ -95,7 +107,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DrownWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EatWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EnergySpendWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FoodWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SleepWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,13 +234,13 @@
     <Resource Include="Resources\Images\Ghost.png" />
     <Resource Include="Resources\Images\Goblin.png" />
     <Resource Include="Resources\Images\item_b.png" />
-    <Resource Include="Resources\Images\item_e.png" />
     <Resource Include="Resources\Images\item_p.png" />
     <Resource Include="Resources\Images\item_r.png" />
     <Resource Include="Resources\Images\item_s.png" />
     <Resource Include="Resources\Images\item_t.png" />
     <Resource Include="Resources\Images\Mimic.png" />
     <Resource Include="Resources\Images\Ooze.png" />
+    <Resource Include="Resources\Images\pass.png" />
     <Resource Include="Resources\Images\Rat.png" />
     <Resource Include="Resources\Images\Shadow.png" />
     <Resource Include="Resources\Images\Skeleton.png" />
@@ -221,7 +249,6 @@
     <Resource Include="Resources\Images\Tentacle.png" />
     <Resource Include="Resources\Images\tile_b.png" />
     <Resource Include="Resources\Images\tile_c.png" />
-    <Resource Include="Resources\Images\tile_e.png" />
     <Resource Include="Resources\Images\tile_h.png" />
     <Resource Include="Resources\Images\tile_s.png" />
     <Resource Include="Resources\Images\tile_t.png" />
@@ -240,6 +267,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\tile_e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\item_e.png" />
+    <Content Include="Resources\music.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -127,8 +127,8 @@
                 <Label x:Name="F2" Visibility="Hidden" Canvas.Left="194" Canvas.Top="163" Height="40" Width="40" MouseEnter="Food_ShowInfo" MouseLeave="MainWindow_HideInfo">
                     <Image Source="pack://application:,,,/Resources/Images/food.png" Stretch="UniformToFill"/>
                 </Label>
-                <Label x:Name="LeftHand" Content="e" HorizontalContentAlignment="Center" Background="Black" Canvas.Left="34" Canvas.Top="276" FontSize="80" Height="120" Width="120" MouseEnter="LeftHand_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
-                <Label x:Name="RightHand" Content="e" HorizontalContentAlignment="Center" Background="Black" Canvas.Left="194" Canvas.Top="276" FontSize="80" Height="120" Width="120" MouseEnter="RightHand_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
+                <Label x:Name="LeftHand" HorizontalContentAlignment="Center" Background="Black" Canvas.Left="34" Canvas.Top="276" FontSize="80" Height="120" Width="120" MouseEnter="LeftHand_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
+                <Label x:Name="RightHand" HorizontalContentAlignment="Center" Background="Black" Canvas.Left="194" Canvas.Top="276" FontSize="80" Height="120" Width="120" MouseEnter="RightHand_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
                 <TextBox x:Name="Info" IsReadOnly="True" HorizontalContentAlignment="Center" Background="AntiqueWhite" FontSize="25" Height="303" Canvas.Left="354" TextWrapping="Wrap" Canvas.Top="163" Width="309" Text="Hover your mouse over something to get some info..." MouseEnter="Journal_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
                 <Label Content="Journal" Foreground="WhiteSmoke" FontSize="40" Canvas.Left="439" Canvas.Top="110" MouseEnter="Journal_ShowInfo" MouseLeave="MainWindow_HideInfo"/>
                 <Button x:Name="ExitButton" Content="Exit" Foreground="GhostWhite" Background="Black" FontSize="40" Canvas.Right="10" Width="112" Height="56" Click="ExitButton_Click"/>

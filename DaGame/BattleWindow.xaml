@@ -133,14 +133,14 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Canvas Grid.Column="0">
-                <Button x:Name="Atk1Button" Content="Atk1" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="32" Canvas.Top="30" Click="Atk1Button_Click"/>
-                <Button x:Name="Atk2Button" Content="Atk2" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="184" Canvas.Top="30" Click="Atk2Button_Click"/>
-                <Button x:Name="SpecAtkButton" Content="Special" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="184" Canvas.Top="30" Click="SpecAtkButton_Click"/>
-                <Button x:Name="PassButton" Content="Pass" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="32" Canvas.Top="30" Click="PassButton_Click"/>
+                <Button x:Name="Atk1Button" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="32" Canvas.Top="30" Click="Atk1Button_Click"/>
+                <Button x:Name="Atk2Button" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="184" Canvas.Top="30" Click="Atk2Button_Click"/>
+                <Button x:Name="SpecAtkButton" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="184" Canvas.Top="30" Click="SpecAtkButton_Click"/>
+                <Button x:Name="PassButton" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="32" Canvas.Top="30" Click="PassButton_Click"/>
             </Canvas>
             <Canvas Grid.Column="1">
-                <Button x:Name="AtkMButton" Content="Atk" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="180" Canvas.Top="30"/>
-                <Button x:Name="SpecAtkMButton" Content="Special" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="180" Canvas.Top="30"/>
+                <Button x:Name="AtkMButton" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Left="180" Canvas.Top="30"/>
+                <Button x:Name="SpecAtkMButton" Foreground="GhostWhite" Background="Black" FontSize="30" Height="120" Width="120" Canvas.Right="180" Canvas.Top="30"/>
             </Canvas>
         </Grid>
     </Grid>

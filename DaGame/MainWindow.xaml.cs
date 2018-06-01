@@ -18,7 +18,7 @@ namespace DaGame
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-
+    //Клетка игрового поля
     public class Cell
     {
         public bool Visible { get; set; }
@@ -37,6 +37,7 @@ namespace DaGame
         List<Monster> Killed;
         public Hero Sam;
         public Labyrinth Dungeon;
+        //Создаем события для смерти и усталости
         public static RoutedEvent NoEnergyEvent = EventManager.RegisterRoutedEvent("NoEnergy", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MainWindow));
         public event RoutedEventHandler NoEnergy
         {
@@ -65,17 +66,21 @@ namespace DaGame
                     string name = "cell" + i + j;
                     Table[i, j] = new Cell((Label)Grid2.FindName(name));
                 }
+            //Рисуем начальное положение и вставляем руки
             Table[0, 0].Visible = false;
             Table[0, 4].Visible = false;
             Table[4, 0].Visible = false;
             Table[4, 4].Visible = false;
-            LeftHand.Content = DataBase.WeaponImages[Sam.LeftHand];
-            RightHand.Content = DataBase.WeaponImages[Sam.RightHand];
+            var ImageL = new Image();
+            ImageL.Source = DataBase.WeaponImages[Sam.LeftHand];
+            LeftHand.Content = ImageL;
+            var ImageR = new Image();
+            ImageR.Source = DataBase.WeaponImages[Sam.RightHand];
+            RightHand.Content = ImageR;
             Redraw();
         }
         void MainWindow_KeyDown(object sender, KeyEventArgs e)
         { 
-            
             if (MovingEnabled)
             {
                 MovingEnabled = false;
@@ -111,14 +116,17 @@ namespace DaGame
             {
                 int coordY = Sam.Position.Y + vertical;
                 int coordX = Sam.Position.X + horizontal;
+                //Пытаемся сделать шаг не в стену
                 if (!(Dungeon.Map[coordY, coordX].ID == '0'))
                 {
                     if (Dungeon.Map[coordY, coordX].ID == 'b')
                     {
+                        //Если кирпичи, то нужна кирка. Из воды кирпичи ломать нельзя, потому что нельзя
                         if (Sam.LeftHand == 'p' || Sam.RightHand == 'p')
                         {
                             if (Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID != 'w')
                             {
+                                //Предупреждаем о трате энергии
                                 EnergySpendWindow esw = new EnergySpendWindow();
                                 esw.ShowDialog();
                                 if (esw.OK)
@@ -137,6 +145,7 @@ namespace DaGame
                     }
                     else if (Dungeon.Map[coordY, coordX].ID == 'h')
                     {
+                        //Пытаемся спуститься в дыру на веревке. Опять же, тратим энергию. Тратим еще энергию, если выходим из воды.
                         if (Sam.LeftHand == 'r' || Sam.RightHand == 'r')
                         {
                             EnergySpendWindow esw = new EnergySpendWindow();
@@ -148,6 +157,7 @@ namespace DaGame
                                     energySpent++;
                                 if (Sam.EP >= energySpent)
                                 {
+                                    //Возможно деремся, возможно что-то находим
                                     if (DataBase.RNG.Next(3) > 0)
                                     {
                                         StartBattle(new Bat(Dungeon, Sam, Table), false);
@@ -155,16 +165,17 @@ namespace DaGame
                                     if (DataBase.RNG.Next(3) > 1)
                                     {
                                         var wcw = new WeaponChooseWindow(Sam, LeftHand, RightHand);
-                                        Visibility = Visibility.Hidden;
+                                        wcw.Owner = this;
                                         wcw.ShowDialog();
-                                        Visibility = Visibility.Visible;
                                         Dungeon.MonsterTier = 2;
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Lurking in the dark, you found some glowing shrooms. They are strange, but quite tasty.");
+                                        var food = new FoodWindow();
+                                        food.Show();
                                         FoodChange(1);
                                     }
+                                    //Вылезаем из другой случайной дыры
                                     int nextHole = DataBase.RNG.Next(Dungeon.Holes.Count);
                                     Coords jump = Dungeon.Holes[nextHole];
                                     if (jump.Equals(new Coords(coordY, coordX)))
@@ -174,7 +185,6 @@ namespace DaGame
                                     EnergyChange(-energySpent);
                                     Redraw();
                                     WanderingMonsters();
-                                    RemoveMonsters();
                                     Redraw();
                                     Keyboard.Focus(this);
                                 }
@@ -183,6 +193,7 @@ namespace DaGame
                     }
                     else
                     {
+                        //Тратим энергию при выходе из воды
                         if (Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID == 'w')
                         {
                             Sam.Position.Y = coordY;
@@ -196,10 +207,11 @@ namespace DaGame
                             Sam.Position.X = coordX;
                             Redraw();
                         }
+                        //Происходит событие. Передаем туда координаты, откуда пришли на случай, если придется убегать
                         Interaction(-vertical, -horizontal);
-                        RemoveMonsters();
                         Redraw();
                     }
+                    //Лечение зависит от текущей энергии
                     int healChance = DataBase.RNG.Next(5);
                     if (Sam.EP > healChance)
                         ChangeHealth(1);
@@ -207,11 +219,12 @@ namespace DaGame
             }
             catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show("You naughty cheater!");
+                Redraw();
             }
         }
         void Redraw()
         {
+            //Перерисовка поля
             VisibilityCheck();
             for (int i = 1; i < 4; i++)
             {
@@ -225,6 +238,7 @@ namespace DaGame
         }
         void DrawTile(int y, int x)
         {
+            //Рисуем видимые клетки и монстров. Остальное - черным
             int coordY = Sam.Position.Y + y - 2;
             int coordX = Sam.Position.X + x - 2;
             if (coordY >= 0 && coordY < 41 && coordX >= 0 && coordX < 41)
@@ -232,6 +246,7 @@ namespace DaGame
                 Tile tmp = Dungeon.Map[coordY, coordX];
                 if (Table[y, x].Visible)
                 {
+                    //Все изображения хранятся в базе данных
                     Table[y, x].Lbl.Background = DataBase.TileImages[Dungeon.Map[coordY, coordX].ID];
                     var beast = Dungeon.FindMonster(new Coords(coordY, coordX));
                     if (beast != null)
@@ -257,7 +272,7 @@ namespace DaGame
         }
         void VisibilityCheck()
         {
-            //terrible code below
+            //Отвратительная проверка видимости. Но лучше я ничего не придумал
             if (Sam.LeftHand == 't' || Sam.RightHand == 't')
             {
                 for (int i = 1; i < 4; i++)
@@ -328,28 +343,31 @@ namespace DaGame
             {
                 case 's':
                     {
+                        //Проверка завершения игры
                         if (Sam.RightHand == 'g' || Sam.LeftHand == 'g')
                         {
                             WinWindow endWin = new WinWindow();
                             endWin.Owner = this;
-                            Visibility = Visibility.Hidden;
                             endWin.ShowDialog();
                         }
                         break;
                     }
                 case 't':
                     {
+                        //Нашли сокровище. Во второй раз его не взять
                         if (!Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade)
                         {
                             WeaponChangeWindow wcw = new WeaponChangeWindow('g', Sam, LeftHand, RightHand);
                             wcw.ShowDialog();
                             if (Sam.LeftHand == 'g' || Sam.RightHand == 'g')
                                 Dungeon.MonsterTier = 3;
+                            Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade = wcw.ChestExplored;
                         }
                         break;
                     }
                 case 'w':
                     {
+                        //Нас могут утащить под воду
                         if (DataBase.RNG.Next(10) == 0)
                         {
                             StartBattle(new Tentacle(Dungeon, Sam, Table), false);
@@ -358,25 +376,28 @@ namespace DaGame
                     }
                 case 'c':
                     {
-                        if (DataBase.RNG.Next(10) > 1)
+                        //Роемся в сундуке. Ну, или деремся с мимиком
+                        if (!Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade)
                         {
-                            if (!Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade)
+                            char chest = Dungeon.Chests[Sam.Position];
+                            if (chest != 'm')
                             {
+
                                 Dungeon.MonsterTier = 2;
-                                WeaponChangeWindow wcw = new WeaponChangeWindow(Dungeon.Chests[Sam.Position], Sam, LeftHand, RightHand);
+                                WeaponChangeWindow wcw = new WeaponChangeWindow(chest, Sam, LeftHand, RightHand);
                                 wcw.ShowDialog();
-                                if (wcw.ChestExplored)
-                                    Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade = true;
+                                Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade = wcw.ChestExplored;
                             }
-                        }
-                        else
-                        {
-                            StartBattle(new Mimic(Dungeon, Sam, Table), false);
+                            else
+                            {
+                                StartBattle(new Mimic(Dungeon, Sam, Table), false);
+                            }
                         }
                         break;
                     }
                 case 'e':
                     {
+                        //Деремся с монстром, если он тут есть
                         foreach (var beast in Dungeon.Monsters)
                         {
                             if (beast.Position.Equals(Sam.Position))
@@ -386,12 +407,17 @@ namespace DaGame
                                 {
                                     Sam.Position.Y += backY;
                                     Sam.Position.X += backX;
+                                    //Гоблин убегает
+                                    if (beast is Goblin)
+                                        beast.Wander(Sam, Dungeon);
                                 }
                             }
                         }
                         break;
                     }
             }
+            Redraw();
+            //Если кого-то убили - убираем с доски. Монстры двигаются только если мы не убегали. Иначе побег не имеет смысла, потому что сразу догонят
             if (!fleed)
             {
                 RemoveMonsters();
@@ -400,6 +426,7 @@ namespace DaGame
         }
         void WanderingMonsters()
         {
+            //Движение монстров. Если напали они - нельзя убегать
             foreach (var beast in Dungeon.Monsters)
             {
                 beast.Wander(Sam, Dungeon);
@@ -409,6 +436,7 @@ namespace DaGame
                 }
             }
             Dungeon.GenerateMonster(Sam, Table);
+            RemoveMonsters();
         }
         bool StartBattle(Monster beast, bool initiative)
         {
@@ -424,23 +452,27 @@ namespace DaGame
             Visibility = Visibility.Visible;
             if (beast.HP == 0)
             {
+                //Выбираем награду
                 if (beast is Goblin)
                 {
                     WeaponChooseWindow weapon = new WeaponChooseWindow(Sam, LeftHand, RightHand);
+                    weapon.Owner = this;
                     weapon.ShowDialog();
-                    weapon.Focus();
                 }
+                //Убираем мимика
                 else if (beast is Mimic)
                 {
                     Dungeon.Chests.Remove(Sam.Position);
                     Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID = 'e';
                 }
+                //Телепорт ко входу
                 else if (beast is Shadow)
                 {
                     if (Dungeon.Map[Dungeon.Start.Y + 1, Dungeon.Start.X].ID == '0' || Dungeon.Map[Dungeon.Start.Y + 1, Dungeon.Start.X].ID == 'b')
                         Sam.Position = new Coords(Dungeon.Start.Y, Dungeon.Start.X + 1);
                     else Sam.Position = new Coords(Dungeon.Start.Y + 1, Dungeon.Start.X);
                 }
+                //Находим лут
                 else if (beast.Loot.Count > 0)
                 {
                     WeaponChangeWindow wcw = new WeaponChangeWindow(beast.Loot[DataBase.RNG.Next(beast.Loot.Count)], Sam, LeftHand, RightHand);
@@ -448,7 +480,8 @@ namespace DaGame
                 }
                 if (beast.Food && DataBase.RNG.Next(3) == 0)
                 {
-                    MessageBox.Show("You also found some food.");
+                    var food = new FoodWindow();
+                    food.Show();
                     FoodChange(1);
                 }
                 Killed.Add(beast);
@@ -460,19 +493,21 @@ namespace DaGame
             FoodChange(0);
             return fleed;
         }
+        //Убираем убитых монстров, чтобы они не ходили, будучи уже убитыми
         void RemoveMonsters()
         {
             foreach (var beast in Killed)
                 Dungeon.Monsters.Remove(beast);
             Killed.Clear();
         }
+        //Завершение игры :/
         void Death(object sender, RoutedEventArgs e)
         {
             var endLose = new DeathWindow();
             endLose.Owner = this;
-            Visibility = Visibility.Hidden;
             endLose.ShowDialog();
         }
+        //Изменение и отрисовка здоровья, энергии и еды
         void ChangeHealth(int delta)
         {
             int count = Sam.HP + delta;
@@ -487,48 +522,6 @@ namespace DaGame
                 else ((Label)FindName(name)).Visibility = Visibility.Hidden;
             }
             Sam.HP += delta;
-        }
-        void EnergyChange(int delta)
-        {
-            int count = Sam.EP + delta;
-            for (int i = 0; i < 5; i++)
-            {
-                string name = "EP" + i;
-                if (count > 0)
-                {
-                    ((Label)FindName(name)).Visibility = Visibility.Visible;
-                    count--;
-                }
-                else ((Label)FindName(name)).Visibility = Visibility.Hidden;
-            }
-            Sam.EP += delta;
-        }
-        void Fatigue(object sender, RoutedEventArgs e)
-        {
-            if (!InBattle)
-            {
-                if (Sam.Food > 0)
-                {
-                    MessageBox.Show("You feel tired. Fortunately, you still have some food. It helps you to recover quickly.");
-                    FoodChange(-1);
-                    EnergyChange(5);
-                }
-                else if (Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID == 'w')
-                {
-                    MessageBox.Show("You try not to drown as hard as you can. But soon your last strength disappeared. These cold deeps welcome you now.");
-                    Sam.HP = 0;
-                }
-                else
-                {
-                    for (int i = 0; i < 5; i++)
-                        for (int j = 0; j < 5; j++)
-                            Table[i, j].Lbl.Background = Brushes.Black;
-                    MessageBox.Show("You are completely tired. Suddenly, you feel, that you're falling asleep. Hopefully, nothing will happen while you rest.");
-                    while (Dungeon.Monsters.Count < 10 * Dungeon.MonsterTier)
-                        Dungeon.GenerateMonster(Sam, Table);
-                    EnergyChange(5);
-                }
-            }
         }
         void FoodChange(int delta)
         {
@@ -545,13 +538,60 @@ namespace DaGame
             }
             Sam.Food += delta;
         }
-
+        void EnergyChange(int delta)
+        {
+            int count = Sam.EP + delta;
+            for (int i = 0; i < 5; i++)
+            {
+                string name = "EP" + i;
+                if (count > 0)
+                {
+                    ((Label)FindName(name)).Visibility = Visibility.Visible;
+                    count--;
+                }
+                else ((Label)FindName(name)).Visibility = Visibility.Hidden;
+            }
+            Sam.EP += delta;
+        }
+        //Тратим еду, либо спим и призываем много-много монстров
+        void Fatigue(object sender, RoutedEventArgs e)
+        {
+            if (!InBattle)
+            {
+                if (Sam.Food > 0)
+                {
+                    var eat = new EatWindow();
+                    eat.Show();
+                    FoodChange(-1);
+                    EnergyChange(5);
+                }
+                //Спать в воде нельзя - мгновенная смерть
+                else if (Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID == 'w')
+                {
+                    var drown = new DrownWindow();
+                    drown.Show();
+                    Sam.HP = 0;
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                        for (int j = 0; j < 5; j++)
+                            Table[i, j].Lbl.Background = Brushes.Black;
+                    var sleep = new SleepWindow();
+                    sleep.Show();
+                    while (Dungeon.Monsters.Count < 10 * Dungeon.MonsterTier)
+                        Dungeon.GenerateMonster(Sam, Table);
+                    EnergyChange(5);
+                }
+            }
+        }
+        //Возвращаем окно меню
         private void MainWindow_Closing(object sender, EventArgs e)
         {
             Owner.Visibility = Visibility.Visible;
             Application.Current.MainWindow = Owner;
         }
-
+        //Вывод информации в журнал
         private void Tile_ShowInfo(object sender, MouseEventArgs e)
         {
             Label tile = (Label)sender;

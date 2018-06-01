@@ -38,6 +38,83 @@ namespace DaGame
             RopeButton.ToolTip = DataBase.Weapons['r'].InfoText;
             ShieldButton.ToolTip = DataBase.Weapons['b'].InfoText;
             TorchButton.ToolTip = DataBase.Weapons['t'].InfoText;
+            switch (sam.LeftHand)
+            {
+                case 's':
+                    {
+                        LeftHandButton.ToolTip = "Current: sword";
+                        break;
+                    }
+                case 'p':
+                    {
+                        LeftHandButton.ToolTip = "Current: pickaxe";
+                        break;
+                    }
+                case 'r':
+                    {
+                        LeftHandButton.ToolTip = "Current: rope";
+                        break;
+                    }
+                case 'b':
+                    {
+                        LeftHandButton.ToolTip = "Current: buckler";
+                        break;
+                    }
+                case 't':
+                    {
+                        LeftHandButton.ToolTip = "Current: torch";
+                        break;
+                    }
+                case 'g':
+                    {
+                        LeftHandButton.ToolTip = "Current: treasure";
+                        break;
+                    }
+                default:
+                    {
+                        LeftHandButton.ToolTip = "Current: nothing";
+                        break;
+                    }
+            }
+        
+        switch (sam.RightHand)
+            {
+                case 's':
+                    {
+                        RightHandButton.ToolTip = "Current: sword";
+                        break;
+                    }
+                case 'p':
+                    {
+                        RightHandButton.ToolTip = "Current: pickaxe";
+                        break;
+                    }
+                case 'r':
+                    {
+                        RightHandButton.ToolTip = "Current: rope";
+                        break;
+                    }
+                case 'b':
+                    {
+                        RightHandButton.ToolTip = "Current: buckler";
+                        break;
+                    }
+                case 't':
+                    {
+                        RightHandButton.ToolTip = "Current: torch";
+                        break;
+                    }
+                case 'g':
+                    {
+                        RightHandButton.ToolTip = "Current: treasure";
+                        break;
+                    }
+                default:
+                    {
+                        RightHandButton.ToolTip = "Current: nothing";
+                        break;
+                    }
+            }
         }
 
         private void RopeButton_Click(object sender, RoutedEventArgs e)
@@ -79,9 +156,12 @@ namespace DaGame
         {
             if (weapon != '\0')
             {
-                Sam.LeftHand = weapon;
-                LeftHand.Content = image;
-                Close();
+                if (Sam.LeftHand != 'g')
+                {
+                    Sam.LeftHand = weapon;
+                    LeftHand.Content = image;
+                    Close();
+                }
             }
             else MessageBox.Show("Make a choice.");
         }
@@ -90,9 +170,12 @@ namespace DaGame
         {
             if (weapon != '\0')
             {
-                Sam.RightHand = weapon;
-                RightHand.Content = image;
-                Close();
+                if (Sam.RightHand != 'g')
+                {
+                    Sam.RightHand = weapon;
+                    RightHand.Content = image;
+                    Close();
+                }
             }
             else MessageBox.Show("Make a choice.");
         }

@@ -10,6 +10,7 @@ namespace DaGame
      
     public abstract class Monster
     {
+        //Базовый монстр. Заданы методы атаки, специалной атаки и перемещения
         int _hp;
         public int HP 
         {
@@ -51,7 +52,7 @@ namespace DaGame
         public abstract void SpecialAttack(Hero sam, bool shackled);
     }
 
-     
+    //Появляется вместо сундука. Средние параметры. Не двигается. Не имеет специальной атаки
     public class Mimic : Monster
     {
         public Mimic(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -75,7 +76,7 @@ namespace DaGame
         }
     }
 
-     
+    //Может схватить игрока при проходе через воду. Среднее здоровье, не наносит урона. Не двигается. Мгновенно убивает, затягивая под воду
     public class Tentacle : Monster
     {
         public Tentacle(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -99,7 +100,7 @@ namespace DaGame
         }
     }
 
-     
+    //Появляется в дыре. Среднее здоровье, низкий урон. Не двигается. Лечит себя 
     public class Bat : Monster
     {
         public Bat(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -129,7 +130,7 @@ namespace DaGame
         }
     }
 
-     
+    //Низкие параметры. Ходит сквозь стены, не атакует игрока специально (но может случайно зайти). Убирает 1 единицу энергии
     public class Ghost : Monster
     {
         public Ghost(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -188,7 +189,7 @@ namespace DaGame
         }
     }
 
-     
+    //100 здоровья (столько урона за 3 хода нет во всей игре), не наносит урон. Вместо движения восстанавливает здоровье. Мгновенно убивает, если получила урон, иначе - умирает сама.
     public class Statue : Monster
     {
         public Statue(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -218,6 +219,7 @@ namespace DaGame
         public override void Wander(Hero sam, Labyrinth dungeon)
         {
             HP = 100;
+            EP = 1;
         }
         public override void SpecialAttack(Hero sam, bool shackled)
         {
@@ -226,7 +228,7 @@ namespace DaGame
         }
     }
 
-     
+    //Низкие параметры. Не ходит в клетку с игроком ("убегает"). Вместо спец атаки заставляет героя отступить и убегает сам. В награду можно выбрать любой предмет (кроме сокровища)
     public class Goblin : Monster
     {
         public Goblin(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -283,7 +285,7 @@ namespace DaGame
         }
     }
 
-     
+    //Средние параметры. Всегда атакует игрока, если он в соседней клетке. Уничтожает единицу еды, либо бьет 2 раза, если еды нет
     public class Rat : Monster
     {
         public Rat(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -354,7 +356,7 @@ namespace DaGame
         }
     }
 
-     
+    //Средние параметры. Не двигается. Запрещает игроку покинуть бой
     public class Spider : Monster
     {
         public Spider(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -391,7 +393,7 @@ namespace DaGame
         }
     }
 
-     
+    //Высокое здоровье, низкий урон. Двигается случайно. Перестает получать доп урон от предметов
     public class Ooze : Monster
     {
         public Ooze(Labyrinth dungeon, Hero sam, Cell[,] table)
@@ -451,12 +453,12 @@ namespace DaGame
         }
     }
 
-     
+     //Высокое здоровье, низкий урон. Атакует игрока. Отравляет, заставляя терять по 1 здоровья до конца боя
     public class Zombie : Monster
     {
         public Zombie(Labyrinth dungeon, Hero sam, Cell[,] table)
         {
-            HP = 7;
+            HP = 8;
             EP = 1;
             Damage = 1;
             Food = false;
@@ -516,12 +518,12 @@ namespace DaGame
         }
     }
 
-     
+     //Среднее здоровье, высокий урон. Атакует игрока. Бьет 2 раза
     public class Skeleton : Monster
     {
         public Skeleton(Labyrinth dungeon, Hero sam, Cell[,] table)
         {
-            HP = 5;
+            HP = 4;
             EP = 1;
             Damage = 3;
             Food = false;
@@ -583,12 +585,12 @@ namespace DaGame
         }
     }
 
-     
+     //Высокие параметры. Телепортируется в случайные точки вокруг игрока, сам не атакует. Телепортирует игрока к выходу
     public class Shadow : Monster
     {
         public Shadow(Labyrinth dungeon, Hero sam, Cell[,] table)
         {
-            HP = 7;
+            HP = 6;
             EP = 1;
             Damage = 3;
             if (sam.LeftHand == 't' || sam.RightHand == 't')
@@ -616,8 +618,8 @@ namespace DaGame
         {
             while (true)
             {
-                int coordY = DataBase.RNG.Next(Math.Max(1, sam.Position.Y - 5), Math.Min(6, sam.Position.Y + 5));
-                int coordX = DataBase.RNG.Next(Math.Max(1, sam.Position.X - 5), Math.Min(6, sam.Position.X + 5));
+                int coordY = DataBase.RNG.Next(Math.Max(1, sam.Position.Y - 2), Math.Min(6, sam.Position.Y + 2));
+                int coordX = DataBase.RNG.Next(Math.Max(1, sam.Position.X - 2), Math.Min(6, sam.Position.X + 2));
                 int tableY = sam.Position.Y - coordY + 2;
                 int tableX = sam.Position.X - coordX + 2;
                 if (sam.Position.Y == coordY && sam.Position.X == coordX)

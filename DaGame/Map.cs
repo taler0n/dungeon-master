@@ -61,7 +61,6 @@ namespace DaGame
         //c - chest
         //t - treasure
         //s - start
-        char _id;
         public string InfoText { get; set; }
         public char ID { get; set; }
         public bool ActionMade { get; set; }
@@ -125,6 +124,7 @@ namespace DaGame
         public int MonsterTier { get; set; }
         public Labyrinth()
         {
+            //Генерация изначальной сетки будущего лабиринта
             Map = new Tile[41, 41];
             bool[,] marked = new bool[20, 20];
             Stack<Coords> stack = new Stack<Coords>();
@@ -142,6 +142,7 @@ namespace DaGame
                 for (j = 39; j > 0; j -= 2)
                     Map[i, j] = new Tile('e');
             }
+            //Пробивание стенок, создание "идеального лабиринта" без циклов и комнат
             int count = 0;
             List<Coords> deadends = new List<Coords>();
             bool building = true;
@@ -185,6 +186,7 @@ namespace DaGame
             Monsters = new List<Monster>();
             MonsterTier = 1;
             Map[1, 1] = new Tile('s');
+            //Размещение сокровища в удаленном тупике, либо в люблом тупике, если все близко
             bool noTreasure = true;
             foreach (var tile in deadends)
             {
@@ -201,6 +203,7 @@ namespace DaGame
                 Map[(deadends[deadends.Count - 1].Y * 2) + 1, (deadends[deadends.Count - 1].X * 2) + 1] = new Tile('t');
                 deadends.RemoveAt(deadends.Count - 1);
             }
+            //Размещение дыр в полу в тупиках
             if (deadends.Count > 5)
             {
                 for (int i = 0; i < 5; i++)
@@ -212,12 +215,18 @@ namespace DaGame
                     deadends.RemoveAt(pos);
                 }
             }
+            //Все остальные тупики - под сундуки (или мимиков)
             foreach (var tile in deadends)
             {
                 var chest = new Coords((tile.Y * 2) + 1, (tile.X * 2) + 1);
                 Map[chest.Y, chest.X] = new Tile('c');
-                Chests.Add(chest, DataBase.Weapons.ElementAt(DataBase.RNG.Next(1, DataBase.Weapons.Count - 1)).Key);
+                if (DataBase.RNG.Next(10) > 1)
+                {
+                    Chests.Add(chest, DataBase.Weapons.ElementAt(DataBase.RNG.Next(1, DataBase.Weapons.Count - 1)).Key);
+                }
+                else Chests.Add(chest, 'm');
             }
+            //Уничтожение случайных стен, чтобы были циклы
             count = DataBase.RNG.Next(15, 20);
             while (count > 0)
             {
@@ -251,6 +260,7 @@ namespace DaGame
                     coordX += step;
                 }
             }
+            //Замена случайных стен на кирпичи
             count = DataBase.RNG.Next(20);
             while (count > 0)
             {
@@ -284,7 +294,8 @@ namespace DaGame
                     coordX += step;
                 }
             }
-            count = DataBase.RNG.Next(10);
+            //Размещение луж воды
+            count = DataBase.RNG.Next(20);
             while (count > 0)
             {
                 int coordY = DataBase.RNG.Next(2, 39);
@@ -317,6 +328,7 @@ namespace DaGame
                 }
             }
         }
+        //Генерация случайного монстра в зависимости от стадии игры
         public void GenerateMonster(Hero sam, Cell[,] table)
         {
             if (Monsters.Count < 10 * MonsterTier)
