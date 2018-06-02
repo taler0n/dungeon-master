@@ -172,7 +172,8 @@ namespace DaGame
                                     else
                                     {
                                         var food = new FoodWindow();
-                                        food.Show();
+                                        food.Owner = this;
+                                        food.ShowDialog();
                                         FoodChange(1);
                                     }
                                     //Вылезаем из другой случайной дыры
@@ -481,7 +482,8 @@ namespace DaGame
                 if (beast.Food && DataBase.RNG.Next(3) == 0)
                 {
                     var food = new FoodWindow();
-                    food.Show();
+                    food.Owner = this;
+                    food.ShowDialog();
                     FoodChange(1);
                 }
                 Killed.Add(beast);
@@ -561,7 +563,8 @@ namespace DaGame
                 if (Sam.Food > 0)
                 {
                     var eat = new EatWindow();
-                    eat.Show();
+                    eat.Owner = this;
+                    eat.ShowDialog();
                     FoodChange(-1);
                     EnergyChange(5);
                 }
@@ -569,7 +572,8 @@ namespace DaGame
                 else if (Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID == 'w')
                 {
                     var drown = new DrownWindow();
-                    drown.Show();
+                    drown.Owner = this;
+                    drown.ShowDialog();
                     Sam.HP = 0;
                 }
                 else
@@ -578,6 +582,7 @@ namespace DaGame
                         for (int j = 0; j < 5; j++)
                             Table[i, j].Lbl.Background = Brushes.Black;
                     var sleep = new SleepWindow();
+                    sleep.Owner = this;
                     sleep.Show();
                     while (Dungeon.Monsters.Count < 10 * Dungeon.MonsterTier)
                         Dungeon.GenerateMonster(Sam, Table);

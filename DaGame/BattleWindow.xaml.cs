@@ -185,53 +185,56 @@ namespace DaGame
 
         void MonsterAttack()
         {
-            bool tied = false;
-            if (Shackled > 0)
+            if (Enemy.HP > 0)
             {
-                tied = true;
-                Shackled--;
-            }
-            bool vertigo = false;
-            if (Stunned > 0)
-            {
-                if (DataBase.RNG.Next(2) > 0)
-                    vertigo = true;
-                Stunned--;
-            }
-            if (!vertigo)
-            {
-                if (Enemy.EP == 3)
+                bool tied = false;
+                if (Shackled > 0)
                 {
-                    if (Enemy is Shadow)
-                        BaseDamage--;
-                    else if (Enemy is Goblin)
-                    {
-                        Fleed = true;
-                        Close();
-                    }
-                    else if (Sam.LeftHand != 'b' && Sam.RightHand != 'b')
-                    {
-                        MonsterEffectApplied = true;
-                        if (Enemy is Spider)
-                            LeaveEnabled = false;
-                    }
-                    Enemy.SpecialAttack(Sam, tied);
-                    Enemy.EP = 0;
-                    if (Enemy is Statue && Sam.HP > 0)
-                        DamageMonster(100);
+                    tied = true;
+                    Shackled--;
                 }
-                else
+                bool vertigo = false;
+                if (Stunned > 0)
                 {
-                    Enemy.Attack(Sam, tied);
-                    Enemy.EP++;
+                    if (DataBase.RNG.Next(2) > 0)
+                        vertigo = true;
+                    Stunned--;
                 }
+                if (!vertigo)
+                {
+                    if (Enemy.EP == 3)
+                    {
+                        if (Enemy is Shadow)
+                            BaseDamage--;
+                        else if (Enemy is Goblin)
+                        {
+                            Fleed = true;
+                            Close();
+                        }
+                        else if (Sam.LeftHand != 'b' && Sam.RightHand != 'b')
+                        {
+                            MonsterEffectApplied = true;
+                            if (Enemy is Spider)
+                                LeaveEnabled = false;
+                        }
+                        Enemy.SpecialAttack(Sam, tied);
+                        Enemy.EP = 0;
+                        if (Enemy is Statue && Sam.HP > 0)
+                            DamageMonster(100);
+                    }
+                    else
+                    {
+                        Enemy.Attack(Sam, tied);
+                        Enemy.EP++;
+                    }
+                }
+                if (OnFire > 0)
+                {
+                    DamageMonster(1);
+                    OnFire--;
+                }
+                RedrawBars();
             }
-            if (OnFire > 0)
-            {
-                DamageMonster(1);
-                OnFire--;
-            }
-            RedrawBars();
         }
         void DamageMonster(int delta)
         {
