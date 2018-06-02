@@ -356,14 +356,12 @@ namespace DaGame
                 case 't':
                     {
                         //Нашли сокровище. Во второй раз его не взять
-                        if (!Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade)
-                        {
-                            WeaponChangeWindow wcw = new WeaponChangeWindow('g', Sam, LeftHand, RightHand);
-                            wcw.ShowDialog();
-                            if (Sam.LeftHand == 'g' || Sam.RightHand == 'g')
-                                Dungeon.MonsterTier = 3;
-                            Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade = wcw.ChestExplored;
-                        }
+                        WeaponChangeWindow wcw = new WeaponChangeWindow('g', Sam, LeftHand, RightHand);
+                        wcw.ShowDialog();
+                        if (Sam.LeftHand == 'g' || Sam.RightHand == 'g')
+                            Dungeon.MonsterTier = 3;
+                        if (wcw.ChestExplored)
+                            Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID = 'e';
                         break;
                     }
                 case 'w':
@@ -378,21 +376,19 @@ namespace DaGame
                 case 'c':
                     {
                         //Роемся в сундуке. Ну, или деремся с мимиком
-                        if (!Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade)
+                        char chest = Dungeon.Chests[Sam.Position];
+                        if (chest != 'm')
                         {
-                            char chest = Dungeon.Chests[Sam.Position];
-                            if (chest != 'm')
-                            {
 
-                                Dungeon.MonsterTier = 2;
-                                WeaponChangeWindow wcw = new WeaponChangeWindow(chest, Sam, LeftHand, RightHand);
-                                wcw.ShowDialog();
-                                Dungeon.Map[Sam.Position.Y, Sam.Position.X].ActionMade = wcw.ChestExplored;
-                            }
-                            else
-                            {
-                                StartBattle(new Mimic(Dungeon, Sam, Table), false);
-                            }
+                            Dungeon.MonsterTier = 2;
+                            WeaponChangeWindow wcw = new WeaponChangeWindow(chest, Sam, LeftHand, RightHand);
+                            wcw.ShowDialog();
+                            if (wcw.ChestExplored)
+                                Dungeon.Map[Sam.Position.Y, Sam.Position.X].ID = 'e';
+                        }
+                        else
+                        {
+                            StartBattle(new Mimic(Dungeon, Sam, Table), false);
                         }
                         break;
                     }

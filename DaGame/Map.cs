@@ -63,11 +63,9 @@ namespace DaGame
         //s - start
         public string InfoText { get; set; }
         public char ID { get; set; }
-        public bool ActionMade { get; set; }
         public Tile(char type)
         {
             ID = type;
-            ActionMade = false;
             switch (ID)
             {
                 case 'e':
